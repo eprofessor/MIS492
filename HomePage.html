@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+
+<!--PgP 7/8/2020 updated page. 
+constants.js file now completed in Formative00
+constants.js file controls student information for attendance, email feedback and running assignment submission report. 
+PgP 6/15/2019 update page, added integral check web db submissions, split constants into two files, one for students, one for course -->
+
+<head>
+
+    <title>MIS492 Home Page</title>
+    <!-- PgP 2/5/2018  Need to update this page to a real RWD -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap -->
+    <link href="../ReadOnly/bootstrap.css" rel="stylesheet">
+
+    <!-- specific student constant file that contains firstname, lastname, starid -->
+    <script src="Constants.js"></script>
+
+    <!-- course constant file that contains semester, class, section pages -->
+    <script src="../ReadOnly/CourseConstants.js"></script>
+
+
+
+</head>
+
+
+
+<body class="container-fluid" onload="setVariables()">
+
+    <div id="xHeading" class=" col-lg-12">
+        <script>document.getElementById("xHeading").innerHTML = pageHeading; </script>
+    </div>
+
+
+    <!-- 
+		PgP 2/28/2020 Add separate form to submit attendance		
+		PgP 3/1/2020 Attendance form and new .asp script work nicely, modified courseconstants.js also
+	-->
+
+    <div class="col-lg-12">
+        <hr />
+    </div>
+
+    <div class="col-lg-12">
+
+        <form class="container-fluid col-lg-4" action="https://eprofessor.azurewebsites.net/code/SubmitAttendance.asp" method="post" name="frmAttendance" id="frmAttendance">
+
+            <input class="form-control" name="FirstName" id="FirstName3" type="hidden" value="default first name">
+            <input class="form-control" name="LastName" id="LastName3" type="hidden" value="default last name">
+            <input class="form-control" name="pin3" id="pin3" type="hidden" value="default StarID">
+            <input class="form-control" name="email3" id="email3" type="hidden" value="default email address">
+            <input class="form-control" name="semester" id="semester3" type="hidden" value="default">
+            <input class="form-control" name="class" id="class3" value="xClass" type="hidden">
+            <input class="form-control" name="section" id="section3" value="default" type="hidden">
+            <input class="form-control" name="assignment" id="assignment3" value="Attendance" type="hidden">
+            <input name="InstID" id="InstID3" value="00617282" type="hidden">
+
+            <input class="text-danger btn-block btn-lg" type="submit" value="Submit Attendance" />
+            <hr />
+
+        </form>
+
+        <!-- PgP 2/28/2020 End of attendance form  -->
+
+
+        <form class="container-fluid col-lg-4" action="https://eprofessor.azurewebsites.net/code/grading/CourseAssignmentSubmissions.asp" method="post" name="frmAssignment" id="frmAssignment">
+
+            <!-- -start-Student, class and assignment information. Assignment hard-coded, other values from constants.js file-start -->
+
+            <input class="form-control" name="FirstName" id="FirstName" type="hidden" value="default first name">
+            <input class="form-control" name="LastName" id="LastName" type="hidden" value="default last name">
+            <input class="form-control" name="pin" id="pin" type="hidden" value="default StarID">
+            <input class="form-control" name="email" id="email" type="hidden" value="default email address">
+            <input class="form-control" name="semester" id="semester" type="hidden" value="default">
+            <input class="form-control" name="class" id="class" value="xClass" type="hidden">
+            <input class="form-control" name="section" id="section" value="default" type="hidden">
+            <input class="form-control" name="assignment" id="assignment" value="Attendance" type="hidden">
+            <input name="InstID" id="InstID" value="00617282" type="hidden">
+
+            <!-- -end-Student, class and assignment information-end -->
+            <input class="text-danger btn-block btn-lg" name="Submit" value="Run Assignment Submissions Report" type="submit">
+            <hr />
+
+        </form>
+
+
+        <div class="text-center">
+            <!-- PgP 3/2/2020 below is  Java Script generated mail to link -->
+            <div id="emailStudent"></div>
+            <script>document.getElementById("emailStudent").innerHTML = xMailTo</script>
+            <hr />
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 h3">
+        <a href="https://eprofessor.azurewebsites.net/MIS492/default.asp" class="bg-info text-white" target="_blank">Syllabus</a>
+        &nbsp; &nbsp;
+ <a href="https://winona.learn.minnstate.edu/d2l/home/6550786" class="bg-info text-white" target="_blank">D2L</a> &nbsp; &nbsp;    
+    <!--    <a class="bg-info text-white" href="https://winona.learn.minnstate.edu/d2l/le/content/5962858/viewContent/58311561/View" target="_blank">MindTap </a>  -->
+    </div>
+
+    <p>
+        Note: Actual Due Dates in D2L Calendar<br />
+    </p>
+
+    <table class=" table table-striped table-hover table-sm table-bordered">
+        <tbody>
+            <tr class="text-center">
+                <th scope="col">Week</th>
+                <th scope="col">Summatives,<br />Projects,<br />Due-Monday</th>
+                <th scope="col">Assignment</th>
+                <th scope="col">Notes</th>
+                <th scope="col">Projects</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>1/15/24</td>
+                <td><a href="Formative00/Formative00.html">Formative00</a></td>
+                <td>&nbsp;</td>
+                <td>Project01-<a href="https://eprofessor.azurewebsites.net/Code/EntryFormWebsiteURL.asp" target="_blank" class="bg-info text-white"> url to web db</a></td>
+            </tr>
+            <tr>
+                <td class=" ">2</td>
+                <td class=" ">1/22/24</td>
+                <td class=" ">&nbsp;</td>
+                <td class=" ">&nbsp;</td>
+                <td class=" "><a href="https://eprofessor.azurewebsites.net/Project01/default.html" target="_blank" class="bg-info text-white">Project01</a>-file to D2L</td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>1/29/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project02-1-website</td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>2/5/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project04-IOT00</td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>2/12/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project04-IOT01</td>
+            </tr>
+            <tr>
+                <td class=" ">6</td>
+                <td class=" ">2/19/24</td>
+                <td class=" ">&nbsp;</td>
+                <td class=" ">&nbsp;</td>
+                <td class=" ">Project03-1-API</td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>2/26/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project04-IOT02</td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>3/4/24</td>
+                <td>&nbsp;</td>
+                <td></td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr class="blockquote-reverse alert-success">
+                <td>9</td>
+                <td>&nbsp;</td>
+                <td colspan="2" class="text-center">S P R I N G &nbsp; &nbsp; &nbsp;   B R E A K </td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>3/18/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project04-IOT13</td>
+            </tr>
+            <tr>
+                <td>11</td>
+                <td>3/25/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>12</td>
+                <td>4/1/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project02-2, Project03-2 tie-in</td>
+            </tr>
+            <tr>
+                <td>13</td>
+                <td>4/8/24</td>
+                <td>&nbsp;</td>
+                <td></td>
+                <td>Project04-IOT27</td>
+            </tr>
+            <tr>
+                <td>14</td>
+                <td>4/15/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+            <tr>
+                <td>15</td>
+                <td>4/22/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project02-3-report</td>
+            </tr>
+
+            <tr>
+                <td>16</td>
+                <td>4/29/24</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>Project03-3-API Report</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+                <td>&nbsp;</td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="col-lg-12">
+    </div>
+
+    <hr />
+
+    <!-- Creative Commons License Info -->
+    <div id="xLicense" class=" col-lg-12 text-muted"></div>
+
+    <div id="xfooter" class=" col-lg-12 text-muted"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../ReadOnly/jquery-1.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../ReadOnly/bootstrap.js"></script>
+
+
+</body>
+
+</html>
