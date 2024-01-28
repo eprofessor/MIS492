@@ -1,0 +1,538 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <title>IOT00</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- PgP 7/11/2019 summative assignment for Raspberry Pi, Arduino Uno, micro:bit -->
+    <!-- Bootstrap -->
+    <link href="../../ReadOnly/bootstrap.css" rel="stylesheet">
+
+    <!-- constant file for student firstname, lastname, starid on students' pages -->
+    <script src="../constants.js"></script>
+
+    <!-- course constant file that contains semester, class, section pages -->
+    <script src="../../ReadOnly/CourseConstants.js"></script>
+
+</head>
+
+<body onload="setVariables()">
+    <form class="container-fluid" action="https://eprofessor.azurewebsites.net/code/ProcessFormData.asp" method="post" name="frmAssignment" id="frmAssignment">
+
+        <input name="InstID" type="hidden" id="InstID" value="00617282" />
+
+        <h1 class="text-center">Operating a Raspberry Pi</h1>
+
+
+        <!-- -start-Student, class and assignment information. Assignment hard-coded, other values from constants.js file-start -->
+        <div class="row col-lg-12">
+            <div class="col-lg-3">
+                <label class="text-primary" for="FirstName">First Name:</label>
+                <input class="form-control" name="FirstName" id="FirstName" type="text" value="default first name" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="LastName">Last Name:</label>
+                <input class="form-control" name="LastName" id="LastName" type="text" value="default last name" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="pin">StarID:</label>
+                <input class="form-control" name="pin" id="pin" type="text" value="default StarID" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="email">Email:</label>
+                <input class="form-control" name="email" id="email" type="email" value="default email address" readonly="readonly" />
+            </div>
+        </div>
+
+        <div class="row col-lg-12">
+            <div class="col-lg-3">
+                <label class="text-primary" for="semester">Semester:</label>
+                <input class="form-control" name="semester" id="semester" type="text" value="default" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="class">Class:</label>
+                <input class="form-control" name="class" id="class" value="xClass" type="text" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="section">Section:</label>
+                <input class="form-control" name="section" id="section" value="default" type="text" readonly="readonly" />
+            </div>
+            <div class="col-lg-3">
+                <label class="text-primary" for="assignment">Assignment:</label>
+                <input class="form-control" name="assignment" id="assignment" value="IOT00" type="text" readonly="readonly" />
+            </div>
+        </div>
+        <!-- -end-Student, class and assignment information-end -->
+        <br />
+
+        <!-- Calculate the correct path for saving the files -->
+        <script>Path = "&#92;OneDrive - MNSCU&#92;" + xClass + "&#92;" + document.getElementById("assignment").value + "&#92;"; </script>
+
+
+        <div class="col-lg-12">
+            <br />
+            <input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT"><br />
+        </div>
+
+        <div class="h3 text-danger col-lg-12">
+            100 Points<hr />
+        </div>
+
+
+        <div class="col-lg-12"><a href="#Objectives" class="btn btn-info" data-toggle="collapse">Learning Objectives</a></div>
+        <div id="Objectives" class=" collapse in col-lg-12">
+
+            <p>
+                <a href="images/RaspberryPi3BPlus.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/RaspberryPi3BPlus.png', 'popup'); return false;">
+                    <img src="images/RaspberryPi3BPlus.png" width="300" alt="Raspberry Pi 3 B+" class="img-responsive img-responsive" />
+                </a>
+                <br />
+                Figure 1-Raspberry Pi 3 B+
+            </p>
+
+
+            <p>
+                These instructions show how to correctly startup, shutdown, and troubleshoot a Raspberry Pi single-board computer (SBC).<br />
+                SBCs are becoming ubiquitous-examples are <a href="https://store.google.com/us/magazine/compare_thermostats?hl=en-US" class="bg-info text-white" target="_blank">Nest thermostats </a>, <a href="https://shop.ring.com/pages/doorbell-cameras" class="bg-info text-white" target="_blank">Ring doorbells</a>, and <a href="https://www.home-assistant.io/" class="bg-info text-white" target="_blank">Home Automation</a>.<br />
+                These devices make up the Internet of Things-IoT, which is greatly impacting organizations and everyday life.<br />
+            </p>
+            <p>After completing this assignment you will be able to:</p>
+            <ol>
+                <li>Start a Raspberry Pi</li>
+                <li>Restart a Raspberry Pi </li>
+                <li>Toggle monitor to display your laptop or the Raspberry Pi</li>
+                <li>Shut down a Raspberry Pi</li>
+                <li>Check for proper operation of the GrovePi+ data collection board</li>
+                <li>Check for WiFi connectivity on a Raspberry Pi</li>
+            </ol>
+            <hr />
+        </div>
+
+
+
+
+        <div class="col-lg-12"><a href="#LabOverview" class="btn btn-info" data-toggle="collapse">Somsen 301 Lab Overview</a></div>
+        <div id="LabOverview" class=" collapse in col-lg-12">
+
+            <p>
+                <a href="images/SensorsActuators.JPG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/SensorsActuators.jpg', 'popup'); return false;">
+                    <img src="images/SensorsActuators.JPG" width="300" alt="IoT workstation" class="img-responsive img-responsive" />
+                </a>
+
+                Figure 2-IoT Workstation-<br />
+                Raspberry Pi 3 B+<br />
+                GrovePi + sensors and actuators<br />
+                <br />
+
+                Item 1-location to connect USB mouse or keyboard<br />
+                Item 2-power button
+            </p>
+
+
+            <p>
+                The Internet of Things workstations in the Somsen 301 lab consist of: 
+            </p>
+            <ul>
+                <li>a Raspberry Pi 3 B+ single-board computer (SBC)</li>
+                <li>GrovePi+ data acquisition board </li>
+                <li>10 sensors and actuators, and a power supply </li>
+                <li>Arduino and micro:bit microcontrollers</li>
+            </ul>
+
+            <p>
+                The Raspberry Pi is mounted to the back of the landscape monitor, and connecst to the landscape monitor with an HDMI cable.
+                <br />
+                In order to toggle the landscape monitor between displaying the Raspberry Pi and your laptop, press the input select button.
+                <br />
+                The input select button is marked with a painted dot or sticker in the lower right of the landscape monitor.
+                <br />
+                <br />
+            </p>
+
+
+            <p>
+                Every morning the Raspberry Pi applies updates and restarts.<br />
+                The desktop appears below:
+                <br />
+
+                <a href="images/BootDesktop.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/BootDesktop.PNG', 'popup'); return false;">
+                    <img src="images/BootDesktop.PNG" width="300" alt="Desktop at Startup" class="img-responsive img-responsive" />
+                </a>
+                Figure 3-Desktop at Startup<br />
+
+
+                <br />
+                Notice the following about the desktop:
+
+            </p>
+
+
+
+
+
+            <ol>
+                <li>The image name (DexPiRed4) along with username and password is on the first line</li>
+                <li>The next line is the date of the Raspbian operating system </li>
+                <li>Then comes the GrovePi+ firmware version (1.4), Node-RED version (1.3.7)</li>
+                <li>The remaining lines are usernames and passwords for various programs</li>
+                <li>In the upper right corner will be that workstation's local IP address-this is to connect via VNC<br />
+                    Please leave this program open so students in other classes can see the IP address.
+                </li>
+                <li>The Raspberry icon in the upper left serves the same function as the Windows Start Button</li>
+            </ol>
+            <hr />
+
+
+            <h3 id="shutdown">Proper shutdown</h3>
+
+            <p>
+                Never turn the power button off or unplug the Raspberry Pi power supply unless you have first shutdown the Raspberry Pi.<br />
+
+
+                <a href="images/Shutdown.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/Shutdown.PNG', 'popup'); return false;">
+                    <img src="images/Shutdown.PNG" width="300" alt="Shutdown" class="img-responsive img-responsive" />
+                </a>
+                <br />
+                Figure 4-Proper Shutdown<br />
+                <br />
+                Failure to properly shutdown the Raspberry Pi can result in corruption of the microSD card which contains the operating systems and programs.<br />
+                The result will be an SBC that does not run properly<br />
+                If this occurs notify the professor or a teaching assistant so that the microSD card can be reflashed with a new operating system image.<br />
+
+            </p>
+
+            <hr />
+        </div>
+
+
+
+
+
+
+
+
+        <div class="col-lg-12"><a href="#Problems" class="btn btn-info" data-toggle="collapse">Indications of Problems</a></div>
+        <div id="Problems" class=" collapse in col-lg-12">
+
+            <p>
+                The IoT workstations have worked well since Fall 2019, but occasionally problems arise.
+                <br />
+                The following is a list of potential problems, and what action to take.<br />
+
+            </p>
+
+
+
+            <ul>
+                <li>Issue:  Yellow lightning bolt or message in the upper right corner.<br />
+                    Problem: Low voltage detected.<br /> </li>
+                    <li>Solution: Notify TA or professor. </li>
+                    <li>
+                    The Raspberry Pi requires 5 volts DC. <br />
+                    If the voltage drops below 4.65 volts DC the alert is triggered.
+                </li>
+            </ul>
+
+
+
+
+
+
+            <p>
+                <a href="images/lowvolt.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/lowvolt.png', 'popup'); return false;">
+                    <img src="images/lowvolt.PNG" width="300" alt="low voltage warning" class="img-responsive img-responsive" />
+                </a>
+                <br />
+                Figure 5-Low Voltage Warning
+            </p>
+
+            <br />
+
+            <p>
+                Note: on DexPiRed4 and later images, there is a 'CPU Check' program on the Desktop-double-click and select 'Execute in Terminal'<br />
+                The program checks and reports if the CPU has been throttled or experienced thermal excesses since it was last started.<br />
+
+                                <a href="images/cpuCheck.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/cpuCheck.PNG', 'popup'); return false;">
+                    <img src="images/cpuCheck.PNG" width="300" alt="check cpu" class="img-responsive img-responsive" />
+                </a><br />
+                <br />
+
+                <a href="images/goodCpu.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/goodCpu.PNG', 'popup'); return false;">
+                    <img src="images/goodCpu.PNG" width="300" alt="cpu okay" class="img-responsive img-responsive" />
+                </a>
+
+
+
+            </p>
+            <hr />
+
+
+
+            <ul>
+                <li>Issue: GrovePi+ Red Reset Light is on</li>
+                <li>The ten sensors on the GrovePi+ are mounted on a screen so that you can see the circuit board underneath.<br />
+                    During normal operation the illuminated green light indicates the board is properly powered.</li>
+                <li>If the red reset light comes on the GrovePi+ board cannot communicate with the sensors.</li>
+                <li>
+                    Solution01: run the 'GrovePi Board Reset' program on the desktop.<br />
+                    If that does not work try the next solution:
+                </li>
+                <li>Solution02: close all programs and save your work.<br />
+                    <a href="#shutdown" class="bg-info text-white" >Shutdown the Raspberry Pi.</a>
+                </li>
+                <li>
+                    Wait about 5 seconds then turn the power back on to the Raspberry Pi.<br />
+                    It should start up correctly.
+                </li>
+                <li>
+                    If the Raspberry Pi does not operate correctly notify a TA or the professor.
+                </li>
+
+               
+            </ul>
+
+            <p>
+
+                <a href="images/GrovePi_ResetLightOn.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/GrovePi_ResetLightOn.png', 'popup'); return false;">
+                    <img src="images/GrovePi_ResetLightOn.png" width="300" alt="Grove Pi reset light" class="img-responsive img-responsive" />
+                </a>
+                <br />
+                Figure 6-GrovePi+ Reset Light
+
+
+				&nbsp;
+            </p>
+
+            <hr />
+
+            <ul>
+                <li>
+                    Loss of network connectivity.
+                </li>
+                
+                <li>
+                    The Raspberry Pis are connected to a separate WSU Wi-Fi network.<br />
+                    The SSID is &#39;som301and304&#39;
+                </li>
+
+                <li>
+
+                    Solution: Notify TA or professor.</li>
+                <li>
+
+                    There are no settings a student can change.<br />
+                    There is a problem with the WiFi which requires technical support intervention.</li>
+
+            </ul>
+
+            <hr />
+
+          
+            <hr />
+        </div>
+
+
+
+
+
+
+        <div class="col-lg-12"><a href="#Overview" class="btn btn-info" data-toggle="collapse">Assignment Overview</a></div>
+
+        <div id="Overview" class="collapse in  col-lg-12">
+           The figure below depicts the main parts of a Raspberry Pi 3 B+<br />
+            A 16GB SanDisk microSD card that includes a Raspbian operating system and appropriate software has been installed<br />
+            
+            <p>
+                You are expected to have a working knowledge of SBC hardware and software.<br />
+                If you do not understand how to use an item, perform a Google Search, 
+                refer to the <a href="https://learn.winona.edu/WSU_Technology_Knowledge_Base" class="bg-info text-white" target="_blank">WSU Technology Knowledge Base</a>,&nbsp; ask a teaching assistant, or ask the instructor.
+            </p>
+
+            <p>    
+                <a href="images/RPi3Pinout.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/RPi3Pinout.png', 'popup'); return false;">
+                    <img src="images/RPi3Pinout.png" width="300" alt="Raspberry Pi 3 layout" class="img-responsive img-responsive" />
+                </a>
+                <br />
+                Figure 7-Raspberry Pi 3 B+ layout
+            </p>
+
+            <hr />
+
+
+            <p>
+
+                 The figure below depicts the GrovePi+ data collection board, which is mounted above the Raspberry Pi.<br />
+                Ten (10) sensors and actuators mounted on a wire mesh connect via 4-wire cables to various ports on the GrovePi+.<br />
+
+                <a href="images/image014.jpg" class="img-responsive img-rounded" target="popup" onclick="window.open('images/image014.jpg', 'popup'); return false;">
+                    <img src="images/image014.jpg" width="600" alt="Grove Pi + layout" class="img-responsive img-responsive" />
+                </a>
+
+
+
+                <br />
+                Figure 8-GrovePi+ Layout
+
+                </p>
+
+            <p>
+                &nbsp;
+            </p>
+
+            <hr />
+        </div>
+
+
+
+        <!--Exercise 1-->
+
+        <div class="col-lg-12"><a href="#Exercise01" class="btn btn-info" data-toggle="collapse">Exercise 1-Working With a Raspberry Pi</a></div>
+
+        <div id="Exercise01" class="collapse in  col-lg-12">
+
+            <ol>
+                <li>This work is done on the Raspberry Pi.</li>
+                <li>Locate a USB keyboard and mouse.
+                    <br />
+                    Plug them into available USB ports on the right side of the Pi at your station.<br />
+                    See Figure 2.
+                </li>
+
+                <li>If the Pi is powered on, there is a steady red light in the lower left corner of the circuit board.<br />
+                    If the Pi is not powered on, click the power button on the Pi, which should be on top or around the monitor in front of you.<br />
+                    Below the red light is a green light that will flash, indicating CPU and disk activity.</li>
+
+                <li>In the lower right corner of the landscape monitor, press the button marked with the colored dot or sticker.
+                    <br />
+                    Repeatedly pressing this button toggles the monitor between displaying your laptop and the Raspberry Pi.
+                </li>
+                <li>ONLY CONNECT TO WSU &#39;som301and304&#39; NETWORK!!!<br />
+                </li>
+
+                <li>The Pi password is on the desktop, it is:
+                    <h3><strong><code>W1n0nA</code></strong></h3>
+                </li>
+
+                <li>In the upper right corner of the desktop retrieve the Raspberry Pi IP address.<br />
+                    Please do not close the IP Address window so that students in other classes can find it.<br />
+                    You may want to take a picture of the IP Address with you cell phone, or record it somewhere.<br />
+                    You will need the IP Address in later assignments to connect your computer to the Raspberry Pi.<br />
+                    If the IP Address is not displayed, click on either the VNC icon:
+
+                    <a href="images/Desktop.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/Desktop.PNG', 'popup'); return false;">
+                        <img src="images/Desktop.PNG" width="300" alt="Raspberry Pi Desktop" class="img-responsive img-responsive" />
+                    </a>
+                    <br />
+                    Figure 9-Raspberry Pi Desktop<br />
+                    <br />
+
+                    Alternatively you can click the IpAddress icon on the desktop and run the program ippi.py to display the  IP Address again.<br />
+
+
+
+                    <a href="images/IPAddress.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/IPAddress.PNG', 'popup'); return false;">
+                        <img src="images/IPAddress.PNG"  alt="Raspberry Pi IP Address" class="img-responsive img-responsive" />
+                    </a>
+                    <br />
+                    Figure 10-Raspberry Pi IP Address<br />
+                    <br />
+
+
+                </li>
+                <li>In later assignments you will use this IP address to connect to the Pi.<br />
+                    The IP address will be of the format: 10.xx.xx.xx<br />
+                    Note that the IP address will periodically change.
+                </li>
+                <li>In the upper left corner, you will see the Raspberry Icon, aka 
+                    &#39;Start Menu&#39;<br />
+                    Click the Raspberry icon,<br />
+                    <img src="images/Raspberry.png" width="46" alt="Raspberry" class="img-responsive img-responsive" /><br />
+                    then view the menu.<br />
+                </li>
+                <li>On the Desktop menu bar, click the Globe icon to the right of the Raspberry icon, to start the Google Chrome browswer.<br />
+                    Many people will use this computer, ensure that passwords are NOT being saved.
+                </li>
+                <li>In Chrome, click the menu (right-end of toolbar) and choose &#39;Settings&#39;.
+                </li>
+                <li>Under Autofill, Click Passwords, turn off &#39;Offer to save passwords&#39; and &#39;Auto Sign-in&#39;<br />
+                    <a href="images/NoPasswords.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/NoPasswords.PNG' 'popup'); return false;">
+                        <img src="images/NoPasswords.PNG" width="300" alt="Do Not Save Passwords" class="img-responsive img-responsive" />
+                    </a>
+                    <br />
+                    Figure 11-Do Not Save Passwords<br />
+                    <br />
+                </li>
+            </ol>
+            <hr />
+        </div>
+
+
+
+
+
+
+
+
+
+        <div class="col-lg-12"><a href="#ExerciseSubmit" class="btn btn-info" data-toggle="collapse">Submit Assignment</a></div>
+
+        <div id="ExerciseSubmit" class="collapse in  col-lg-12">
+
+            <div class="col-lg-12">
+                <p>
+                    When all tasks are completed read and comprehend the statement below. <br />
+                    Then press the Submit button.
+                </p>
+                <hr />
+            </div>
+
+            <div class="col-lg-12 text-primary">
+                (100) 1. Assignment submission<br />
+                <!-- Enter your answer in the VALUE field below   GROK -->
+                <input class="form-control" name="q1" type="text" id="q1" readonly="readonly" value="I have completed all the exercises, and understand how to work with a Somsen 301 IoT workstation.">
+                <hr />
+            </div>
+
+            <hr />
+
+        </div>
+
+
+
+        <div class="col-lg-12">
+            <p>
+                Congratulations! You have successfully worked with a Raspberry Pi single board computer.<br />
+                In the next series of assignments you will explore how to communicate with and control the Raspberry Pi from another computer.
+            </p>
+            <hr />
+        </div>
+
+
+
+
+
+        <div class=" col-lg-12">
+            <br />
+            <input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT">
+            <br />
+        </div>
+
+    </form>
+
+    <!-- Creative Commons License Info -->
+    <div id="xLicense" class=" col-lg-12 text-muted"></div>
+
+    <div id="xfooter" class=" col-lg-12 text-muted"></div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="../../ReadOnly/jquery-1.js"></script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="../../ReadOnly/bootstrap.js"></script>
+
+
+</body>
+</html>
