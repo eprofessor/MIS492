@@ -1,0 +1,423 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<title>IOT01</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- PgP 7/11/2019 summative assignment for Raspberry Pi, Arduino Uno, micro:bit -->
+	<!-- Bootstrap -->
+	<link href="../../ReadOnly/bootstrap.css" rel="stylesheet">
+
+	<!-- constant file for student firstname, lastname, starid on students' pages -->
+	<script src="../constants.js"></script>
+
+	<!-- course constant file that contains semester, class, section pages -->
+	<script src="../../ReadOnly/CourseConstants.js"></script>
+
+</head>
+
+<body onload="setVariables()">
+	<form class="container-fluid" action="https://eprofessor.azurewebsites.net/code/ProcessFormData.asp" method="post" name="frmAssignment" id="frmAssignment">
+
+		<input name="InstID" type="hidden" id="InstID" value="00617282">
+
+		<h1 class="text-center">Exploring Uses of a Single Board Computer</h1>
+
+
+		<!-- -start-Student, class and assignment information. Assignment hard-coded, other values from constants.js file-start -->
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="FirstName">First Name:</label>
+				<input class="form-control" name="FirstName" id="FirstName" type="text" value="default first name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="LastName">Last Name:</label>
+				<input class="form-control" name="LastName" id="LastName" type="text" value="default last name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="pin">StarID:</label>
+				<input class="form-control" name="pin" id="pin" type="text" value="default StarID" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="email">Email:</label>
+				<input class="form-control" name="email" id="email" type="email" value="default email address" readonly="readonly">
+			</div>
+		</div>
+
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="semester">Semester:</label>
+				<input class="form-control" name="semester" id="semester" type="text" value="default" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="class">Class:</label>
+				<input class="form-control" name="class" id="class" value="xClass" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="section">Section:</label>
+				<input class="form-control" name="section" id="section" value="default" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="assignment">Assignment:</label>
+				<input class="form-control" name="assignment" id="assignment" value="IOT01" type="text" readonly="readonly">
+			</div>
+		</div>
+		<!-- -end-Student, class and assignment information-end -->
+		<br />
+
+		<!-- Calculate the correct path for saving the files -->
+		<script>Path = "&#92;OneDrive - MNSCU&#92;" + xClass + "&#92;" + document.getElementById("assignment").value + "&#92;"; </script>
+
+
+		<div class="col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT"><br />
+		</div>
+
+		<div class="h3 text-danger col-lg-12">
+			100 Points<hr />
+		</div>
+
+
+		<div class="col-lg-12"><a href="#Objectives" class="btn btn-info" data-toggle="collapse">Learning Objectives</a></div>
+		<div id="Objectives" class=" collapse in col-lg-12">
+
+			<p>
+				<a href="images/RaspberryPi3BPlus.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/RaspberryPi3BPlus.png', 'popup'); return false;">
+					<img src="images/RaspberryPi3BPlus.png" width="300" alt="Raspberry Pi 3 B+" class="img-responsive img-responsive" />
+				</a>
+				<br />
+				Figure 1-Raspberry Pi 3 B+
+			</p>
+
+
+			<p>
+				These instructions will show you how to prepare the operating system for a Raspberry Pi single-board computer (SBC); boot and then configure the device.<br />
+				SBCs are becoming ubiquitous-examples are <a href="https://store.google.com/us/magazine/compare_thermostats?hl=en-US" class="bg-info text-white" target="_blank">Nest thermostats </a>, <a href="https://shop.ring.com/pages/doorbell-cameras" class="bg-info text-white" target="_blank">Ring doorbells</a>, and <a href="https://www.home-assistant.io/" class="bg-info text-white" target="_blank">Home Automation</a>.<br />
+				These devices make up the Internet of Things-IoT, which is greatly impacting organizations and everyday life.<br />
+				In later assignments you will continue experimenting with SBCs, microcontrollers, sensors, actuators and other networking devices to provide an understanding of the technology and the ability to synthesize novel solutions.
+			</p>
+			<p>After completing this assignment you will be able to:</p>
+			<ol>
+				<li>Connect to the WSU Guest wireless network</li>
+				<li>Configure the SBC </li>
+				<li>Use a web browser and other software on the SBC</li>
+				<li>Use an application on the SBC to take screen shots</li>
+				<li>Upload the screen shot to D2L</li>
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<div class="col-lg-12"><a href="#Overview" class="btn btn-info" data-toggle="collapse">Assignment Overview</a></div>
+
+		<div id="Overview" class="collapse in  col-lg-12">
+			<h3>When you encounter technical issues, please first review <a href="../IOT00/IOT00.html"  class="bg-info text-white" target="_blank" >IOT00</a>.    </h3>
+
+			This assignment reviews basic computer concepts that you will need in this course and throughout your career.
+            <br />
+			Somsen 301 makes use of a Raspberry Pi 3 B+.
+			<br />
+			A 16GB SanDisk microSD card that includes a Raspbian operating system and appropriate software has been installed.
+            <p>
+				You are expected to have a working knowledge of SBC hardware and software.<br />
+				If you do not understand how to use an item, perform a Google Search, 
+                refer to the <a href="https://learn.winona.edu/WSU_Technology_Knowledge_Base" class="bg-info text-white" target="_blank">WSU Technology Knowledge Base</a>,&nbsp; ask a teaching assistant, or ask the instructor.
+			</p>
+
+			<p>
+				<a href="images/RPi3Pinout.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/RPi3Pinout.png', 'popup'); return false;">
+					<img src="images/RPi3Pinout.png" width="300" alt="Raspberry Pi 3 layout" class="img-responsive img-responsive" />
+				</a>
+				<br />
+				Figure 2-Raspberry Pi 3 B+ layout
+			</p>
+
+			<hr />
+		</div>
+
+
+
+		<!--Exercise 1-->
+
+		<div class="col-lg-12"><a href="#Exercise01" class="btn btn-info" data-toggle="collapse">Exercise 1-Working With a Raspberry Pi</a></div>
+
+		<div id="Exercise01" class="collapse in  col-lg-12">
+
+			<ol>
+				<li>This work is done on the Raspberry Pi.</li>
+				<li>Locate a USB keyboard and mouse.
+                    <br />
+					Plug them into available USB ports on the right side of the Pi at your station.<br />
+					See Figure 2.
+				</li>
+
+				<li>If the Pi is powered on, there is a steady red light in the lower left corner of the circuit board.<br />
+					If the Pi is not powered on, click the power button on the Pi, which should be on top or around the monitor in front of you.<br />
+					Below the red light is a green light that will flash, indicating CPU activity.</li>
+
+				<li>In the lower right corner of the landscape monitor, press the button marked with the colored dot.
+                    <br />
+					Repeatedly pressing this button toggles the monitor between displaying your laptop and the Raspberry Pi.
+				</li>
+				<li>ONLY CONNECT TO WSU &#39;som301and304&#39; NETWORK!!!<br />
+					<a href="https://eprofessor.azurewebsites.net/HelpFiles/Somsen301_WiFi/Somsen301_WiFi.html" class="bg-info text-white" target="_blank">FOLLOW THESE INSTRUCTIONS</a>
+					<br />
+				</li>
+
+				<li>The Pi password is on the desktop, it is:
+                    <h3><strong><code>W1n0nA</code></strong></h3>
+				</li>
+
+				<li>In the upper right corner of the desktop click on VNC to display the IP address.<br />
+
+					<a href="images/Desktop.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/Desktop.PNG', 'popup'); return false;">
+						<img src="images/Desktop.PNG" width="300" alt="Raspberry Pi Desktop" class="img-responsive img-responsive" />
+					</a>
+					<br />
+					Figure 3-Raspberry Pi Desktop<br />
+					<br />
+				</li>
+				<li>In later assignments you will use this IP address to connect to the Pi.<br />
+					The IP address will be of the format: 10.xx.xx.xx<br />
+					Note that the IP address may periodically change.
+				</li>
+				<li>In the upper left corner, you will see the Raspberry Icon, aka 
+                    &#39;Start Menu&#39;<br />
+					Click the Raspberry icon,<br />
+					<img src="images/Raspberry.png" width="46" alt="Raspberry" class="img-responsive img-responsive" /><br />
+					then view the menu.<br />
+				</li>
+				<li>On the Desktop menu bar, click the Globe icon to the right of the Raspberry icon, to start the Google Chrome browswer.<br />
+					Many people will use this computer, ensure that passwords are NOT being saved.
+				</li>
+				<li>In Chrome, click the menu (right-end of toolbar) and choose &#39;Settings&#39;.
+				</li>
+				<li>Under Autofill, Click Passwords, turn off &#39;Offer to save passwords&#39; and &#39;Auto Sign-in&#39;<br />
+					<a href="images/NoPasswords.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/NoPasswords.PNG' 'popup'); return false;">
+						<img src="images/NoPasswords.PNG" width="300" alt="Do Not Save Passwords" class="img-responsive img-responsive" />
+					</a>
+					<br />
+					Figure 4-Do Not Save Passwords<br />
+					<br />
+				</li>
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<!--Exercise 2-->
+
+		<div class="col-lg-12"><a href="#Exercise02" class="btn btn-info" data-toggle="collapse">Exercise 2-Screenshots</a></div>
+
+		<div id="Exercise02" class="collapse in  col-lg-12">
+
+			<p>
+				Scrot (short for <strong>SCR</strong>een sh<strong>OT</strong>) takes screenshots that document your work.<br />
+			</p>
+
+			<ol>
+				<li>This work is done on the Raspberry Pi.</li>
+				<li>On the Raspberry Pi open a terminal window.</li>
+
+				<li>In the Terminal window type <code>scrot -h</code><br />
+					This brings up information on how to use scrot.<br />
+					Review this information.<br />
+					<p>
+						<a href="images/scrot.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/scrot.PNG', 'popup'); return false;">
+							<img src="images/scrot.PNG" width="300" alt="scrot help" class="img-responsive img-responsive" /></a>Figure 5- Scrot Help<br />
+					</p>
+					<br />
+				</li>
+
+				<li>Note that simply typing <code>scrot</code> in a Terminal window takes a screenshot and stores it in the  Raspberry Pi&#39;s&nbsp; &#39;/home/pi&#39; folder.<br />
+					<p>
+						<a href="images/ScrotShots.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/scrotShots.PNG', 'popup'); return false;">
+							<img src="images/ScrotShots.PNG" width="300" alt="screen shots" class="img-responsive img-responsive" /></a>Figure 6-Scrot Screen Shots
+					</p>
+				</li>
+
+				<li>Practice taking screenshots.</li>
+				<li>In the terminal window type in 
+                    <code>scrot -s</code> (scrot select)
+                    then click and drag the mouse to select an area around the current browser web page.<br />
+					Repeat the process until you have a nicely trimmed image, see below.
+				</li>
+				<li>
+					<p>
+						<a href="images/ScreenShotScrot.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/ScreenShotScrot.PNG', 'popup'); return false;">
+							<img src="images/ScreenShotScrot.PNG" width="300" alt="desktop settings" class="img-responsive img-responsive" /></a>Figure 7-Desktop Screenshot by <code>scrot -s</code><br />
+					</p>
+				</li>
+
+				<li>Open File Manager, navigate to the /home/pi directory and rename the screen shot to something like <strong>MyIoTImage01.png</strong></li>
+			</ol>
+			<hr />
+		</div>
+
+
+
+
+
+
+		<div class="col-lg-12"><a href="#Exercise03" class="btn btn-info" data-toggle="collapse">Exercise 3-Investigate Projects</a></div>
+
+		<div id="Exercise03" class="collapse in  col-lg-12">
+			<p>
+				This work is done on your laptop.<br />
+				For this Exercise read all of these instructions.<br />
+				You are submitting a screen shot to the appropriate D2L Assignment folder that documents your work.<br />
+				Use the Snipping Tool for screen shots<br />
+				Do not try this on the Raspberry Pi, as it will take a long time, and it may freeze up.<br />
+				</p>
+
+				<p>
+					The Raspberry Pi organization provides a lot of materials explaining what can be done with the Raspberry Pi single board computer.<br />
+					<a href="https://magpi.raspberrypi.com/books" class="bg-info text-white" target="_blank">Check out their books</a><br />
+					<br />
+					<a href="https://magpi.raspberrypi.com/issues" class="bg-info text-white" target="_blank">Check out their magazines</a><br />
+				</p>
+
+				<ol>
+					<li>Review &#39; <a href="https://magpi.raspberrypi.com/books/handbook-2022" class="bg-info text-white" target="_blank">The Official Raspberry Pi Handbook 2022</a> &#39;<br />
+						A .pdf copy is also available in the OneDrive/ReadOnly/IoT folder
+					</li>
+
+					<li>Pay particular attention to the &#39;Project Showcases&#39; and &#39;Maker Guides&#39; sections.
+					</li>
+
+					<li>Find and read an article of particular interest to you.
+					</li>
+
+					<li>Reflect on the benefits of using a Raspberry Pi to accomplish such a task, instead of a laptop or desktop computer.<br />
+						Consider cost.<br />
+						Consider what functions distinguish the Raspberry Pi from a laptop or desktop.
+					</li>
+				</ol>
+
+			<p>
+
+				<strong>Open NotePad </strong>
+				<br />
+				Enter your Name, Assignment 
+            	(IOT01) and date so that it is visible next to the article, as shown below:
+			</p>
+
+			<p>
+				<a href="images/MagScreenShot.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/MagScreenShot.PNG', 'popup'); return false;">
+					<img src="images/MagScreenShot.PNG" width="300" alt="magazine article screen shot" class="img-responsive img-responsive" /></a>Figure 8-Article Screen Shot<br />
+			</p>
+
+
+			<p>
+				Use the Snipping Tool to make a screenshot from the article you chose in The Official Raspberry Pi Handbook 2022.<br />
+			</p>
+		</div>
+
+
+		<div class="col-lg-12 text-primary">
+			<p>
+				(40) 1. On your laptop, <a href="https://winona.learn.minnstate.edu/" class="bg-info text-white" target="_blank">login to D2L</a>.<br />
+				Upload your screenshot to the &#39;IOT01&#39; D2L Assignment Folder.
+			</p>
+			<hr />
+
+			<div class="col-lg-12 text-danger">
+				<h2>Screenshot IOT01</h2>
+				<hr />
+			</div>
+		</div>
+
+
+		<!--Exercise 4-->
+
+		<div class="col-lg-12"><a href="#Exercise04" class="btn btn-info" data-toggle="collapse">Exercise 4-Reflection</a></div>
+
+		<div id="Exercise04" class="collapse in  col-lg-12">
+
+			<p>
+				This work is done on your laptop in Visual Studio or Dream Weaver.<br />
+				Based on your experience in this exercise and what you just learned, develop a brief statement about the value of single board computer technology to organizations.<br />
+				Think about what type of problems these devices could solve, and would it be cost-effective?
+			</p>
+
+			<div class="col-lg-12 text-primary">
+				(50) 2. Reflections<br />
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q2" type="text" id="q2" value="value of single board computer:">
+				<hr />
+			</div>
+
+			<hr />
+
+			<hr />
+		</div>
+
+
+
+
+
+		<div class="col-lg-12"><a href="#ExerciseSubmit" class="btn btn-info" data-toggle="collapse">Submit Assignment</a></div>
+
+		<div id="ExerciseSubmit" class="collapse in  col-lg-12">
+
+			<div class="col-lg-12">
+				<p>
+					When all tasks are completed press the Submit button.
+				</p>
+				<hr />
+			</div>
+
+			<div class="col-lg-12 text-primary">
+				(10) 3. Assignment submission<br />
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q3" type="text" id="q3" readonly="readonly" value="I have completed all the exercises, and uploaded my screenshot to the D2L Assignment folder IOT01.">
+				<hr />
+			</div>
+
+			<hr />
+
+		</div>
+
+
+
+		<div class="col-lg-12">
+			<p>
+				Congratulations! You have successfully worked with a Raspberry Pi single board computer.<br />
+				In the next series of assignments you will explore how to communicate with and control the Raspberry Pi from another computer.
+			</p>
+			<hr />
+		</div>
+
+
+
+
+
+
+		<div class=" col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT">
+			<br />
+		</div>
+
+	</form>
+
+	<!-- Creative Commons License Info -->
+	<div id="xLicense" class=" col-lg-12 text-muted"></div>
+
+	<div id="xfooter" class=" col-lg-12 text-muted"></div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="../../ReadOnly/jquery-1.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../../ReadOnly/bootstrap.js"></script>
+
+
+</body>
+</html>
