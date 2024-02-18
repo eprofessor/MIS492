@@ -1,0 +1,480 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<title>IOT02</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- PgP 7/11/2019 summative assignment for Raspberry Pi, Arduino Uno, micro:bit -->
+	<!-- Bootstrap -->
+	<link href="../../ReadOnly/bootstrap.css" rel="stylesheet">
+
+	<!-- constant file for student firstname, lastname, starid on students' pages -->
+	<script src="../constants.js"></script>
+
+	<!-- course constant file that contains semester, class, section pages -->
+	<script src="../../ReadOnly/CourseConstants.js"></script>
+
+</head>
+
+<body onload="setVariables()">
+	<form class="container-fluid" action="https://eprofessor.azurewebsites.net/code/ProcessFormData.asp" method="post" name="frmAssignment" id="frmAssignment">
+
+		<input name="InstID" type="hidden" id="InstID" value="00617282">
+
+		<h1 class="text-center">VNC-GUI Remote Control of a Raspberry Pi</h1>
+
+
+		<!-- -start-Student, class and assignment information. Assignment hard-coded, other values from constants.js file-start -->
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="FirstName">First Name:</label>
+				<input class="form-control" name="FirstName" id="FirstName" type="text" value="default first name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="LastName">Last Name:</label>
+				<input class="form-control" name="LastName" id="LastName" type="text" value="default last name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="pin">StarID:</label>
+				<input class="form-control" name="pin" id="pin" type="text" value="default StarID" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="email">Email:</label>
+				<input class="form-control" name="email" id="email" type="email" value="default email address" readonly="readonly">
+			</div>
+		</div>
+
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="semester">Semester:</label>
+				<input class="form-control" name="semester" id="semester" type="text" value="default" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="class">Class:</label>
+				<input class="form-control" name="class" id="class" value="xClass" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="section">Section:</label>
+				<input class="form-control" name="section" id="section" value="default" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="assignment">Assignment:</label>
+				<input class="form-control" name="assignment" id="assignment" value="IOT02" type="text" readonly="readonly">
+			</div>
+		</div>
+		<!-- -end-Student, class and assignment information-end -->
+		<br />
+
+		<!-- Calculate the correct path for saving the files -->
+		<script>Path = "&#92;OneDrive - MNSCU&#92;" + xClass + "&#92;" + document.getElementById("assignment").value + "&#92;"; </script>
+
+
+		<div class="col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT" /><br />
+		</div>
+
+		<div class="h3 text-danger col-lg-12">
+			100 Points<hr />
+		</div>
+
+
+		<div class="col-lg-12"><a href="#Objectives" class="btn btn-info" data-toggle="collapse">Learning Objectives</a></div>
+		<div id="Objectives" class=" collapse in col-lg-12">
+
+			<p>
+				<img src="images/VNCViewerIcon.PNG" alt="VNC Viewer" class="img-responsive img-responsive" />VNC Viewer
+			</p>
+
+			<p>
+				These instructions show you how to use VNC Viewer to control a Raspberry Pi over a network.<br />
+				This &#39;remote access&#39; technology has revolutionized remote work, allowing individuals to access and support numerous devices all over the world from their computer, or in some cases, phone.<br />
+				This also makes it much easier for organizations and individuals to collaborate.<br />
+				More information on <a href="https://en.wikipedia.org/wiki/RealVNC" class="bg-info text-white" target="_blank">RealVNC</a> is available online.<br />
+				Being able to use this software will greatly simplify working with the Raspberry Pi, Arduino UNO and micro:bit.
+			</p>
+
+			<p>After completing this assignment you will be able to:</p>
+			<ol>
+				<li>Connect to the Raspberry Pi using RealVNC</li>
+				<li>Control the Raspberry Pi from your laptop using RealVNC</li>
+				<li>Transfer files in both directions between the Raspberry Pi and your laptop</li>
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<div class="col-lg-12"><a href="#Overview" class="btn btn-info" data-toggle="collapse">Assignment Overview</a></div>
+
+		<div id="Overview" class="collapse in  col-lg-12">
+			<h3>When you encounter technical issues, please first review <a href="../IOT00/IOT00.html"  class="bg-info text-white" target="_blank" >IOT00</a>.    </h3>
+
+			This assignment reviews basic computer concepts that you will need in this course and throughout your career.
+            <br />
+			<p>
+				You are expected to have a working knowledge of SBC hardware and software.<br />
+				If you do not understand how to use an item, perform a Google Search, 
+                refer to the <a href="https://learn.winona.edu/WSU_Technology_Knowledge_Base" class="bg-info text-white" target="_blank">WSU Technology Knowledge Base</a>,&nbsp; ask a teaching assistant, or ask the instructor.
+			</p>
+
+			<hr />
+		</div>
+
+		<!--Exercise 1-->
+
+		<div class="col-lg-12"><a href="#Exercise01" class="btn btn-info" data-toggle="collapse">Exercise 1-Install VNC Viewer on Your Laptop</a></div>
+
+		<div id="Exercise01" class="collapse in  col-lg-12">
+			<ol>
+				<li>These steps are performed on your laptop.</li>
+
+                <li>
+                    In D2L Course Widget click on the OneDrive 'ReadOnly' folder, scroll to the bottom and download the latest 'VNC Viewer' installation file.
+                </li>
+
+                <li>
+                    Run the Real VNC installer on your laptop.
+                </li>
+
+				<li>Ref:  for the latest version of VNC, open a browser to: <a href="https://www.realvnc.com/en/connect/download/viewer/" class="bg-info text-white" target="_blank">https://www.realvnc.com/en/connect/download/viewer/ </a></li>
+
+				<li>Download and save RealVNC Viewer to your ' 
+                <code><span id="aPath"></span></code>
+					<script>document.getElementById("aPath").innerHTML = Path; </script>
+					' folder.<br />
+				</li>
+
+				<li>Use File Explorer, find the RealVNC Viewer install file, and double-click to install the program.</li>
+
+				<li>During the install of RealVNC Viewer accept all of the default settings.
+				</li>
+
+				<li>Press the Windows key and type:
+                    <code>VNC Viewer</code>
+					, then press the &#39; Enter&#39; key to start VNC Viewer.
+				</li>
+
+				<li>The first time VNC Viewer starts, there are no connections, so it looks like this:<br />
+					<p>
+						<a href="images/VNCViewer.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/VNCViewer.PNG', 'popup'); return false;">
+							<img src="images/VNCViewer.PNG" width="300" alt="VNC Viewer" class="img-responsive img-responsive" /></a>VNC Viewer
+					</p>
+				</li>
+
+				<li>There is no need to sign in or to create a RealVNC account, that is only needed for a cloud version of RealVNC which we are not using.</li>
+
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<!--Exercise 2-->
+
+		<div class="col-lg-12"><a href="#Exercise02" class="btn btn-info" data-toggle="collapse">Exercise 2-Boot the Raspberry Pi</a></div>
+
+		<div id="Exercise02" class="collapse in  col-lg-12">
+
+			<ol>
+				<li>These steps are performed on your Raspberry Pi.</li>
+
+				<li>Turn on the power and allow the Raspberry Pi to boot up.</li>
+
+				<li>On the monitor press the colored dot to display the Pi desktop.<br />
+					If you do not have a keyboard and mouse (input devices) connected to the Raspberry Pi, you cannot interact with it.<br />
+					This is where the need arises to run the VNC Viewer.<br />
+					And this is why you enabled VNC when you originally configured your Raspberry Pi.
+				</li>
+
+				<li>Your Raspberry Pi desktop should appear after about 30 seconds.<br />
+					If the desktop does not appear, see a teaching assistant or the professor.
+				</li>
+
+			</ol>
+			<hr />
+		</div>
+
+		<!--Exercise 3-->
+
+		<div class="col-lg-12"><a href="#Exercise03" class="btn btn-info" data-toggle="collapse">Exercise 3-Start VNC Viewer</a></div>
+
+		<div id="Exercise03" class="collapse in  col-lg-12">
+
+			<ol>
+				<li>These steps are performed on your laptop.</li>
+
+				<li>
+					<p>
+						Your laptop MUST be connected to the WSU network with a WIRED connection, a wireless connection will NOT work.<br />
+						Look for this icon in your task tray:
+                <img src="images/WiredNetwork.PNG" alt="wired connection" class="img-responsive img-responsive" />Wired Network Connection Icon
+					</p>
+				</li>
+
+				<li>The Raspberry Pi will connect automatically to the <code>som301and304</code>  wireless network.<br />
+					Do NOT connect to the Warrior or Wazoo wireless networks.
+				</li>
+
+				<li>If VNC Viewer is not running on your laptop, start it per the instructions in Excercise 1.</li>
+
+				<li>
+					<p>
+						In the VNC Viewer address bar at the top, enter the IP address of your Raspberry Pi that you saved from your previous assignment.<br />
+						<a href="images/VNCIPAddress.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/VNCIPAddress.PNG', 'popup'); return false;">
+							<img src="images/VNCIPAddress.PNG" width="300" alt="enter RPi IP address" class="img-responsive img-responsive" /></a>Enter IP Address<br />
+					</p>
+				</li>
+				<li>Press the Enter key.<br />
+					You may get a warning about logging into a new machine, ignore it and press OK.</li>
+				<li>An Authenication dialog box will appear.<br />
+					Enter your username and password for the Raspberry Pi.<br />
+					username: pi<br />
+					password:<br />
+					<h3><strong><code>W1n0nA</code></strong></h3>
+					Check the &#39;Remember password&#39; box.<br />
+					Click OK.<br />
+					<p>
+						<a href="images/VNCLogin.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/VNCLogin.PNG', 'popup'); return false;">
+							<img src="images/VNCLogin.PNG" width="300" alt="logon to RPi" class="img-responsive img-responsive" /></a>Login<br />
+					</p>
+
+				</li>
+
+
+
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<!--Exercise 4-->
+
+		<div class="col-lg-12"><a href="#Exercise04" class="btn btn-info" data-toggle="collapse">Exercise 4-VNC File Transfer</a></div>
+
+		<div id="Exercise04" class="collapse in  col-lg-12">
+
+			<ol>
+
+				<li>These steps are done on your laptop, in VNC, viewing the Raspberry Pi desktop.<br />
+					Choose Menu&gt;Accessories&gt;Text Editor<br />
+					Enter your name and today's date.</li>
+
+				<li>Choose File&gt;Save<br />
+					name the file Readme.txt and save the file in your /home/pi folder.<br />
+					Then close the Text Editor.<br />
+					<p>
+						<a href="images/TextFile.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/TextFile.PNG', 'popup'); return false;">
+							<img src="images/TextFile.PNG" width="300" alt="create text file" class="img-responsive img-responsive" /></a>Create Text File<br />
+					</p>
+				</li>
+
+				<li>In the top right of the VNC Viewer right-click the VNC icon and select File Transfer...
+				</li>
+
+				<li>In the lower left of the &#39;VNC Server - File Transfer&#39; dialog box click the &#39;Send Files&#39; button.<br />
+					There will be a listing of the files in the /home/pi directory<br />
+					Select the Readme.txt file that you just created.<br />
+					Click OK to send the files to your laptop.
+                    <p>
+						<a href="images/FileTransfer.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/FileTransfer.PNG', 'popup'); return false;">
+							<img src="images/FileTransfer.PNG" width="300" alt="File Transfer" class="img-responsive img-responsive" /></a>Transferring File<br />
+
+
+				</li>
+
+				<li>To see where on your laptop the Readme.txt file was sent, in the upper-left corner of VNC Viewer click the icon and select Transfer Files.<br />
+					The VNC Viewer dialog box appears and indicates the folder receiving (fetching) the files.<br />
+
+					<p>
+						<a href="images/ReceiveFiles.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/ReceiveFiles.PNG', 'popup'); return false;">
+							<img src="images/ReceiveFiles.PNG" width="300" alt="Receive Files" class="img-responsive img-responsive" /></a>Recevie Files Folder<br />
+					</p>
+
+					<br />
+
+
+				</li>
+
+				<li>On your laptop, verify that the Readme.txt file did arrive in the correct folder.<br />
+					Use File Explorer to browse to that location, double-click Readme.txt to open it up.<br />
+					<strong>Open NotePad (PC) or  on the Raspberry Pi go Menu>Accessories>Text Editor<br />
+						Enter your Name, Assignment (IOTP02) and date so that it is visible in the screen shot.<br />
+						Position the dialog boxes as shown below and take a screenshot.<br />
+					</strong>
+					<p>
+						<a href="images/TransferSuccess.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/TransferSuccess.PNG', 'popup'); return false;">
+							<img src="images/TransferSuccess.PNG" width="300" alt="Transfer Success" class="img-responsive img-responsive" /></a>Transfer Success<br />
+					</p>
+					<br />
+
+					Note that the main window is the VNC session.<br />
+					The File Explorer and NotePad windows are from your computer.<br />
+					The other dialog boxes and the desktop are from the Raspberry Pi VNC session.                    
+				</li>
+
+
+			</ol>
+			<hr />
+		</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<!--Exercise 5-->
+
+		<div class="col-lg-12"><a href="#Exercise05" class="btn btn-info" data-toggle="collapse">Exercise 5-Screenshot</a></div>
+
+		<div id="Exercise05" class="collapse in  col-lg-12">
+
+			<p>Use the Snipping Tool on your laptop to take a screenshot shown above to document your work.</p>
+
+			<ol>
+				<li>On your laptop position the windows as indicated and shown above.</li>
+
+				<li>Open the Snipping Tool and take a screenshot.
+				</li>
+
+				<li>Save the screenshot  as &quot;IOT02&quot; in your ' 
+             <code><span id="abPath"></span></code>
+					<script>document.getElementById("abPath").innerHTML = Path; </script>
+					' folder.<br />
+
+			</ol>
+			<hr />
+		</div>
+
+
+		<div class="col-lg-12 text-danger">
+			<h2>Screenshot IOT02</h2>
+			<hr />
+		</div>
+
+
+
+
+
+
+		<div class="col-lg-12"><a href="#UploadScreenShot" class="btn btn-info" data-toggle="collapse">Upload Screenshot</a></div>
+
+		<div id="UploadScreenShot" class="collapse in  col-lg-12">
+			<p>
+				Submit to the appropriate D2L Assignment folder a screenshot that documents your work.<br />
+			</p>
+			<br />
+		</div>
+
+		<div class="col-lg-12 text-primary">
+			<p>
+				(70) 1. Upload your screenshot to the &#39;IOT02&#39; D2L Assignment Folder.
+			</p>
+			<hr />
+		</div>
+
+
+
+		<!--Exercise 6-->
+
+		<div class="col-lg-12"><a href="#Exercise06" class="btn btn-info" data-toggle="collapse">Exercise 6-Reflection</a></div>
+
+		<div id="Exercise06" class="collapse in  col-lg-12">
+
+			<p>
+				Based on your experience in this exercise and what you just learned, develop a brief statement about the value of VNC as a remote access tool for organizations.<br />
+				Think about what type of problems these devices could solve, and would it be cost-effective?<br />
+				Consider businesses that deploy IoT 'solutions', on the order of thousands or millions of devices-how can support of these devices be automated?
+			</p>
+
+			<div class="col-lg-12 text-primary">
+				(20) 2. Reflections<br />
+
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q2" type="text" id="q2" value="value of VNC remote access:">
+				<hr />
+			</div>
+
+			<hr />
+
+			<hr />
+		</div>
+
+
+
+
+
+		<div class="col-lg-12"><a href="#ExerciseSubmit" class="btn btn-info" data-toggle="collapse">Submit Assignment</a></div>
+		<div id="ExerciseSubmit" class="collapse in  col-lg-12">
+
+			<div class="col-lg-12">
+				<p>
+					When all tasks are completed press the Submit button.
+				</p>
+				<hr />
+			</div>
+
+			<div class="col-lg-12 text-primary">
+				(10) 3. Assignment submission<br />
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q3" type="text" id="q3" readonly="readonly" value="I have completed all the exercises, and uploaded my screenshot to the D2L Assignment folder IOT02.">
+				<hr />
+
+			</div>
+		</div>
+
+
+
+
+
+		<hr />
+
+
+		<hr />
+
+		<div class="col-lg-12">
+			<p>
+				Congratulations! You have successfully connected via VNC to a Raspberry Pi single board computer and transferred a file.<br />
+				In the next assignment you will explore how to communicate with the Raspberry Pi from your laptop using a command line interface.
+			</p>
+			<hr />
+		</div>
+
+
+
+
+
+		<div class=" col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT">
+			<br />
+		</div>
+
+	</form>
+
+	<!-- Creative Commons License Info -->
+	<div id="xLicense" class=" col-lg-12 text-muted"></div>
+
+	<div id="xfooter" class=" col-lg-12 text-muted"></div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="../../ReadOnly/jquery-1.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../../ReadOnly/bootstrap.js"></script>
+
+
+</body>
+</html>
