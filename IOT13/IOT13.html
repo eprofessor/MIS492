@@ -1,0 +1,389 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+	<title>IOT13</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- PgP 7/11/2019 summative assignment for Raspberry Pi, Arduino Uno, micro:bit -->
+	<!-- Bootstrap -->
+	<link href="../../ReadOnly/bootstrap.css" rel="stylesheet">
+
+	<!-- constant file for student firstname, lastname, starid on students' pages -->
+	<script src="../constants.js"></script>
+
+	<!-- course constant file that contains semester, class, section pages -->
+	<script src="../../ReadOnly/CourseConstants.js"></script>
+
+</head>
+
+<body onload="setVariables()">
+	<form class="container-fluid" action="https://eprofessor.azurewebsites.net/code/ProcessFormData.asp" method="post" name="frmAssignment" id="frmAssignment">
+
+		<input name="InstID" type="hidden" id="InstID" value="00617282">
+
+		<h1 class="text-center">Sensors &amp; Actuators on Raspberry Pi</h1>
+
+
+		<!-- -start-Student, class and assignment information. Assignment hard-coded, other values from constants.js file-start -->
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="FirstName">First Name:</label>
+				<input class="form-control" name="FirstName" id="FirstName" type="text" value="default first name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="LastName">Last Name:</label>
+				<input class="form-control" name="LastName" id="LastName" type="text" value="default last name" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="pin">StarID:</label>
+				<input class="form-control" name="pin" id="pin" type="text" value="default StarID" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="email">Email:</label>
+				<input class="form-control" name="email" id="email" type="email" value="default email address" readonly="readonly">
+			</div>
+		</div>
+
+		<div class="row col-lg-12">
+			<div class="col-lg-3">
+				<label class="text-primary" for="semester">Semester:</label>
+				<input class="form-control" name="semester" id="semester" type="text" value="default" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="class">Class:</label>
+				<input class="form-control" name="class" id="class" value="xClass" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="section">Section:</label>
+				<input class="form-control" name="section" id="section" value="default" type="text" readonly="readonly">
+			</div>
+			<div class="col-lg-3">
+				<label class="text-primary" for="assignment">Assignment:</label>
+				<input class="form-control" name="assignment" id="assignment" value="IOT13" type="text" readonly="readonly">
+			</div>
+		</div>
+		<!-- -end-Student, class and assignment information-end -->
+		<br />
+
+		<!-- Calculate the correct path for saving the files -->
+		<script>Path = "&#92;OneDrive - MNSCU&#92;" + xClass + "&#92;" + document.getElementById("assignment").value + "&#92;"; </script>
+
+
+		<div class="col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT"><br />
+		</div>
+
+		<div class="h3 text-danger col-lg-12">
+			100 Points<hr />
+		</div>
+
+
+		<div class="col-lg-12"><a href="#Objectives" class="btn btn-info" data-toggle="collapse">Learning Objectives</a></div>
+		<div id="Objectives" class=" collapse in col-lg-12">
+
+
+			<p>
+				These instructions will show you how a Raspberry Pi can interact with the physical world using sensors and actuators.<br />
+				This software and hardware allows you to collect data from sensors 
+				and send signals to actuators by Python programs running on a Raspberry Pi.<br />
+				<br />
+
+				More information on the <a href="https://wiki.seeedstudio.com/GrovePi_Plus/" class="bg-info text-white" target="_blank">GrovePi+</a> system used is available online.<br />
+
+				This system allows you to collect data from devices connected to your Raspberry Pi-such as peripherals and connected sensors that measure light level, sound level, temperature level, humidity leve and more.
+			</p>
+			<p>After completing this assignment you will be able to:</p>
+			<ol>
+				<li>Investigate sensors and actuators</li>
+				<li>Run Python programs on a Raspberry Pi that communicate with sensors and actuators</li>
+				<li>Discuss uses of Raspberry Pi/Grove Pi devices to solve problems and address opportunities</li>
+			</ol>
+			<hr />
+		</div>
+
+
+
+		<div class="col-lg-12"><a href="#Overview" class="btn btn-info" data-toggle="collapse">Assignment Overview</a></div>
+
+		<div id="Overview" class="collapse in  col-lg-12">
+			<h3>When you encounter technical issues, please first review <a href="../IOT00/IOT00.html"  class="bg-info text-white" target="_blank" >IOT00</a>.    </h3>
+
+			This assignment reviews basic computer concepts that you will need in this course and throughout your career.
+            <br />
+			<p>
+				You are expected to have a working knowledge of SBC hardware and software.<br />
+				If you do not understand how to use an item, perform a Google Search, 
+                refer to the <a href="https://learn.winona.edu/wiki/WSU_Technology_Knowledge_Base" class="bg-info text-white" target="_blank">WSU Technology Knowledge Base</a>,&nbsp; ask a teaching assistant, or ask the instructor.
+			</p>
+
+			<hr />
+		</div>
+
+		<!--Exercise 1-->
+
+		<div class="col-lg-12"><a href="#Exercise01" class="btn btn-info" data-toggle="collapse">Exercise 1-Examine Sensors &amp; Actuators</a><a href="#Exercise01"></a></div>
+
+		<div id="Exercise01" class="collapse in  col-lg-12">
+
+			<ol>
+				<li>These steps are performed on the Raspberry Pi.</li>
+
+				<li>Each IoT workstation contains a Raspberry Pi, Grove Pi+ data acquistion board and 10 sensors and actuators.<br />
+					Python programs have been written that control these devices-physical connections, data gathering, data processing, data presentation and data storage, if required.</li>
+
+				<li>Make sure that the Raspberry Pi is powered on.<br />
+					Then inspect the GrovePi board to make sure it is also powered on-the green LED in the bottom center of the board will be lit.<br />
+					Note-if the GrovePi board Red LED reset light is illuminated, you must shutdown the Raspberry Pi, turn off the power, wait five seconds and then turn the power on again.<br />
+					<p>
+						<a href="images/GrovePi_ResetLightOn.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/GrovePi_ResetLightOn.png', 'popup'); return false;">
+							<img src="images/GrovePi_ResetLightOn.png" width="200" alt="GrovePi reset light" class="img-responsive img-responsive" /></a>GrovePi with Red Reset light on<br />
+					</p>
+				</li>
+
+				<li>Familiarize yourself with the available sensors and actuators depicted below.<br />
+
+					<p>
+						<a href="images/SensorsActuators_SBC.png" class="img-responsive img-rounded" target="popup" onclick="window.open('images/SensorsActuators_SBC.png', 'popup'); return false;">
+							<img src="images/SensorsActuators_SBC.png" width="300" alt="sensors and actuators on GrovePi" class="img-responsive img-responsive" /></a>GrovePi with Sensors and Actuators-on top of Raspberry Pi<br />
+					</p>
+
+				</li>
+
+				<li>Review the <a href="images/SensorActuatorConfig.html" class="bg-info text-white" target="_blank">GrovePi Configuration</a> that details how the sensors and actuators are physically connected.
+				</li>
+
+				<li>On the desktop, right-click the &#39;Grove LED Bar&#39; icon.<br />
+					<img src="images/GroveLedIcon.PNG" alt="grove led icon"><br />
+					Choose &#39;Text Editor&#39;
+					<br />
+				</li>
+
+				<li>Mousepad opens and displays a configuration file containing the path to the xLED_bar.py file</li>
+
+				<li>Open a Terminal Window, enter python and the path to the Python file:<br />
+					<code>python /home/pi/Desktop/IoT_Files/xLED_bar.py</code><br />
+					Press Enter and the program will execute, and illuminate the LED bar segments.
+
+				</li>
+
+				<li>Alternatively, double-click the Grove LED Bar icon on the desktop and choose &#39;Execute in Terminal&#39;.</li>
+
+
+
+				<li>To view the python program, open &#39;File Manager&#39; to the path indicated above, find the file xLED_bar.py, right click it and choose &#39;Text Editor&#39; .<br />
+					Examine the program code.
+					<br />
+
+
+					<p>
+						<a href="images/LedBarTest.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/LedBarTest.PNG', 'popup'); return false;">
+							<img src="images/LedBarTest.PNG" width="600" alt="LED test bar" class="img-responsive img-responsive" /></a>LED Bar test on desktop<br />
+					</p>
+					<hr />
+				</li>
+			</ol>
+
+		</div>
+
+
+
+		<!--Exercise 2-->
+
+		<div class="col-lg-12"><a href="#Exercise02" class="btn btn-info" data-toggle="collapse">Exercise 2-Examine System Test</a></div>
+
+		<div id="Exercise02" class="collapse in  col-lg-12">
+
+			<ol>
+				<li>These steps are performed on your Raspberry Pi.</li>
+
+				<li>Using the skills learned, examine the program behind the Grove IoT icon on the desktop.<br />
+					Hint: it is connected to the program &#39;xSystemTest.py&#39;<br />
+					<img src="images/GroveLedIcon.PNG" alt="grove led icon"><br />
+				</li>
+
+
+
+				<li>The program xSystemTest.py is much more complex.<br />
+					It is designed to test the proper functioning of all the sensors, actuators and the Raspberry Pi sound system.
+				</li>
+				<li>Run the program xSystemTest.py<br />
+					Note-this program is interactive, follow the prompts on the screen.<br />
+					Note-the program will read the test results aloud, if not troubleshoot the Raspberry Pi sound system.
+				</li>
+				<li>When done, the program appends the results to SystemTest.txt on the desktop.<br />
+					Open the file, scroll to the end.<br />
+				</li>
+
+			</ol>
+			<hr />
+		</div>
+
+
+
+
+		<!--Exercise 3-->
+
+
+		<div class="col-lg-12"><a href="#Exercise03" class="btn btn-info" data-toggle="collapse">Exercise 3-Screenshot</a></div>
+
+		<div id="Exercise03" class="collapse in  col-lg-12">
+
+			<p>
+				These steps are done on the Raspberry Pi, or on your laptop using VNC.
+			</p>
+
+
+			<ol>
+				<li>Take a screenshot of the last part of the SystemTest.txt,  displaying the light level and current date.<br />
+					Note: this can be done using the Snipping Tool if you are running VNC, or use the <code>scrot</code> command if you are connected to the Raspberry Pi with a keyboard and mouse.
+
+                    <p>
+						<a href="images/SystemTest.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/SystemTest.PNG', 'popup'); return false;">
+							<img src="images/SystemTest.PNG" width="600" alt="system test " class="img-responsive img-responsive" /></a>system test output<br />
+					</p>
+				</li>
+
+				<li>On your laptop save the screenshot  as &quot;IOT13&quot; in your ' 
+             <code><span id="abPath"></span></code>
+					<script>document.getElementById("abPath").innerHTML = Path; </script>
+					' folder.<br />
+
+			</ol>
+			<hr />
+		</div>
+
+
+		<div class="col-lg-12 text-danger">
+			<h2>Screenshot IOT13</h2>
+			<hr />
+		</div>
+
+
+
+		<div class="col-lg-12"><a href="#UploadScreenShot" class="btn btn-info" data-toggle="collapse">Upload Screenshot</a></div>
+
+		<div id="UploadScreenShot" class="collapse in  col-lg-12">
+			<p>
+				Submit to the appropriate D2L Assignment folder a screenshot that documents your work.<br />
+			</p>
+			<br />
+		</div>
+
+		<div class="col-lg-12 text-primary">
+			<p>
+				(50) 1. Upload your screenshot to the &#39;IOT13&#39; D2L Assignment Folder.
+			</p>
+			<hr />
+		</div>
+
+
+
+
+		<!--Exercise 4-->
+
+		<div class="col-lg-12"><a href="#Exercise04" class="btn btn-info" data-toggle="collapse">Exercise 4-Reflections</a></div>
+
+		<div id="Exercise04" class="collapse in  col-lg-12">
+
+			<p>
+				Based on your experience in this exercise, consider the value of IoT devices for organizations, especially those needing to collect information.<br />
+				Think about what type of problems a Raspberry Pi equipped with sensors and actuators could solve, and whether it could be cost-effective.<br />
+				Businesses are deploying IoT 'solutions'-how can sensor equipped Raspberry Pis support or automate these efforts?<br />
+				<br />
+				References:<br />
+				Grove Pi: <a href="https://wiki.seeedstudio.com/GrovePi_Plus/">&nbsp;Grove Pi Wiki</a><br />
+
+				Grove Hat:&nbsp; <a href="https://www.linkedin.com/learning-admin/content/courses/5007872/videos/2303665">Rasberry Pi Weekly</a>
+			</p>
+			<div class="col-lg-12 text-primary">
+				(20) 2. Reflections-value<br />
+				List a specific problem that a GrovePi equipped Raspberry Pi could solve.<br />
+
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q2" type="text" id="q2" value="specific problem:">
+				<hr />
+			</div>
+
+
+
+			<div class="col-lg-12 text-primary">
+				(20) 3. Reflections-content<br />
+				Research the internet on any topic related to Internet of Things sensors and actuators.<br />
+				Provide one example of how  an organization&#39;s 
+				product development department could use the GrovePi system to their organization&#39;s benefit.<br />
+
+				<!-- Enter your answer in the VALUE field below   GROK -->
+				<input class="form-control" name="q3" type="text" id="q3" value="use of GrovePi:">
+				<hr />
+			</div>
+
+
+		</div>
+
+
+
+
+
+
+
+
+		<div class="col-lg-12"><a href="#ExerciseSubmit" class="btn btn-info" data-toggle="collapse">Submit Assignment</a></div>
+
+
+		<div class="col-lg-12">
+			<p>
+				When all tasks are completed press the Submit button.
+			</p>
+			<hr />
+		</div>
+
+		<div class="col-lg-12 text-primary">
+			(10) 4. Assignment submission<br />
+			<!-- Enter your answer in the VALUE field below   GROK -->
+			<input class="form-control" name="q4" type="text" id="q4" value="I have completed all the exercises, and uploaded my screenshot to the D2L Assignment folder IOT13.">
+			<hr />
+		</div>
+
+
+
+
+
+		<div class="col-lg-12">
+			<p>
+				Congratulations! You have used the GrovePi system, an interface to sensors and actuators, on a Raspberry Pi single board computer.                
+			</p>
+			<hr />
+		</div>
+
+
+
+
+
+		<div class=" col-lg-12">
+			<br />
+			<input class=" text-danger btn-block btn-lg" type="submit" name="Submit" value="SUBMIT -once you have completed this assignment- SUBMIT">
+			<br />
+		</div>
+
+	</form>
+
+	<!-- Creative Commons License Info -->
+	<div id="xLicense" class=" col-lg-12 text-muted"></div>
+
+	<div id="xfooter" class=" col-lg-12 text-muted"></div>
+
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="../../ReadOnly/jquery-1.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../../ReadOnly/bootstrap.js"></script>
+
+
+</body>
+</html>
+
+
