@@ -1,4 +1,4 @@
-#PgP 2/10/2024 chatGPT API call from PiMyLifeUp article
+#PgP 2/10/2024 chatgpt.py  API call from PiMyLifeUp article
 # https://pimylifeup.com/raspberry-pi-chatgpt/
 # modified to add USB flash drive to contain chatGPT API key
 # need to have billing setup to get this to run
@@ -11,11 +11,11 @@ from openai import OpenAI
 # chatgpt.txt must contain chatGPT API key on line 1 and NOTHING else
 #
 
-f = open('/media/pi/MYDATA/chatgpt.txt', 'r')
+f = open('/media/pi/MYDATA/chatGPT_API/chatgpt.txt', 'r')
 line1=f.readline() # read the chatGPT API key
 line1=line1.strip()  #remove trailing and leading spaces
 
-print('chatGPT API key: ', line1)   #echo key
+# print('chatGPT API key: ', line1)   #echo key
 
 client = OpenAI(
     api_key=line1

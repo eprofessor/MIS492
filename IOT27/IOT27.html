@@ -7,6 +7,17 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+	<!-- PgP 7/11/2019 summative assignment for Raspberry Pi, Arduino Uno, micro:bit -->
+	<!-- Bootstrap -->
+	<link href="../../ReadOnly/bootstrap.css" rel="stylesheet">
+
+	<!-- constant file for student firstname, lastname, starid on students' pages -->
+	<script src="../constants.js"></script>
+
+	<!-- course constant file that contains semester, class, section pages -->
+	<script src="../../ReadOnly/CourseConstants.js"></script>
+
+
     <script>
 
 function copy_code(event) {
@@ -104,13 +115,17 @@ function copy_code(event) {
 			100 Points<hr />
 		</div>
 
+        <div class="col-lg-12">
+            <h3>This assignment requires a USB flash drive. </h3>
+            <hr />
+        </div>
 
 		<div class="col-lg-12"><a href="#Objectives" class="btn btn-info" data-toggle="collapse">Learning Objectives</a></div>
 		<div id="Objectives" class=" collapse in col-lg-12">
 
 
 			<p>
-				These instructions will show you how a Raspberry Pi can interact with the ChatGPT using an API-Applicaiton Programming Interface.
+				These instructions will show you how a Raspberry Pi can interact with the ChatGPT using an API-Application Programming Interface.
 			</p>
             <p>
 
@@ -128,7 +143,7 @@ function copy_code(event) {
            
 			<p>After completing this assignment you will be able to:</p>
 			<ol>
-				<li>Use a Raspberry Pi as a interface with a chatGPT instance </li>
+				<li>Use a Raspberry Pi to interface with a chatGPT instance </li>
 				<li>Learn how to keep your chatGPT API key safe</li>
 				<li>Discuss uses of Raspberry Pi as an AI tool</li>
 			</ol>
@@ -160,53 +175,72 @@ function copy_code(event) {
 		<div id="Exercise01" class="collapse in  col-lg-12">
 
 			<ol>
+
+				<li>
+					These steps are performed on your computer.
+				</li>
+
+				<li>Insert a USB-A flash drive into your computer.</li>
+					
+				<li>Use File Explorer to name the flash drive &#39;MYDATA&#39;</li>
+                <li>Use File Explorer to extract the files from &#39;chatGPT_API.zip&#39;  and transfer the entire folder &#39;chatGPT_API&#39; onto the root folder of the &#39;MYDATA&#39; flash drive </li>
+				
+				<li>Use Notepad to create a file named &#39;chatgpt.txt&#39; in the &#39;chatGPT_API&#39; folder of the flash drive.&nbsp;<br />
+					The file, on line 1, must contain your ChatGPT API key.<br />
+					There should be nothing else in the file.<br />	
+					Save the file.
+				</li>
+
+				<li>
+					When done, your flash drive will look like this:<br />
+						<a href="images/flashDriveFiles.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/flashDriveFiles.PNG', 'popup'); return false;">
+							<img src="images/flashDriveFiles.PNG" width="600" alt="flash drive files" class="img-responsive img-responsive" /></a>Flash Drive Files<br />
+					<br />
+
+				</li>
+
+				
+				<li>
+					Eject the flash drive from your computer.
+				</li>
+
+				<li>
+					Insert the &#39;MYDATA&#39; flash drive into the Rasbperry Pi.<br />
+				</li>
+
+
+
 				<li>These steps are performed on the Raspberry Pi.</li>
-
-				<li>
-					Open a Terminal window on your Raspberry Pi.<br />
-					Type the following code to create a new directory:<br />
-					<code>
-						mkdir ~/openai
-					</code>
-				</li>
-
-				<li>
-					Move into that directory with the following command:<br />
-					<code>
-						cd ~/openai
-					</code>
-				</li>
-
-				<li>
-					Install the ChatGPT Python API with the following command: <br />
-					<code>
-						python3 -m pip install openai
-					</code>
-				</li>
 
 
 				<li>
 					Open Thonny on your Raspberry Pi.
 				</li>
 
-				<li>Enter the following code, or transfer chatgpt.py to your Raspberry pi, and<br />
-					save the file chatgpt.py to the folder:<br />
+				<li>Open the following Python file, chatgpt.py which is found in:<br />
 					<code>
-						<strong>home/pi/openapi</strong>
+						<strong>
+							/media/pi/MYDATA/chatGPT_API/chatgpt.py
+						</strong>
 					</code>
+					<br />
+					
+
+
+					
 
 
 
 <div id="pcode">
 
     <br /><br />
-    <button onclick="copy_code(event)">Copy Python Code</button>
+    <button onclick="copy_code(event)">Copy Python Code chatgpt.py</button>
     <br /><br />
 
 
 <pre> <code>
 
-#PgP 2/10/2024 chatGPT API call from PiMyLifeUp article
+#PgP 2/10/2024 chatgpt.py  API call from PiMyLifeUp article
 # https://pimylifeup.com/raspberry-pi-chatgpt/
 # modified to add USB flash drive to contain chatGPT API key
 # need to have billing setup to get this to run
@@ -219,7 +253,7 @@ from openai import OpenAI
 # chatgpt.txt must contain chatGPT API key on line 1 and NOTHING else
 #
 
-f = open('/media/pi/MYDATA/chatgpt.txt', 'r')
+f = open('/media/pi/MYDATA/chatGPT_API/chatgpt.txt', 'r')
 line1=f.readline() # read the chatGPT API key
 line1=line1.strip()  #remove trailing and leading spaces
 
@@ -266,18 +300,10 @@ while True:
 
 				</li>
 
-				<li>Make sure that you have a USB-A flash drive, named &#39;MYDATA&#39; that contains the file &#39;chatgpt.txt&#39; in the root.&nbsp;<br />
-					The file, line 1, must contain your ChatGPT API key.<br />
-					There should be nothing else in the file.<br />
-					
-				</li>
-
-				<li>Insert the flash drive containing chatgpt.txt into the Rasbperry Pi.<br />
-				</li>
 
 				<li>Run the code, you should be asked to type in a prompt.<br />
-						<a href="../IOT27/images/chatgptAPI.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/chatgptAPI.PNG', 'popup'); return false;">
-							<img src="../IOT27/images/chatgptAPI.PNG" width="400" alt="LED test bar" class="img-responsive img-responsive" /></a>chatgpt code output<br />
+						<a href="images/chatgptAPI.PNG" class="img-responsive img-rounded" target="popup" onclick="window.open('images/chatgptAPI.PNG', 'popup'); return false;">
+							<img src="images/chatgptAPI.PNG" width="400" alt="LED test bar" class="img-responsive img-responsive" /></a>chatgpt code output<br />
 					<br />
 				</li>
 
